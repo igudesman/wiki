@@ -4,11 +4,11 @@ Unit testing with publishing in SonarQube
 Setting up environment
 ----------------------
 
-Install requirements:
+**Install requirements:**
 
     $ pip3 install -r requirements.txt
 
-Install buildx:
+**Install buildx:**
 
 `buildx` comes bundled with Docker CE starting with 19.03, but requires experimental mode to be enabled on the Docker CLI.
 To enable it, `"experimental": "enabled"` can be added to the CLI configuration file `~/.docker/config.json`. An alternative is to set the `DOCKER_CLI_EXPERIMENTAL=enabled` environment variable.
@@ -19,7 +19,7 @@ Change the permission to execute:
 
     $ chmod a+x ~/.docker/cli-plugins/docker-buildx
     
-Run *Apache Airflow* and *PostgreSQL*
+**Run *Apache Airflow* and *PostgreSQL***
 
 Run
 ---
