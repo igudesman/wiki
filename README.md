@@ -5,10 +5,10 @@ General information
 -------------------
 Following instructions allow you to run unit tests for uploadservice and publish results (code coverage and tests results) in SonarQube.
 
-*run_pytest.sh* - script runs pytest and generates *report.xml*, *result.xml*, *status.txt*
-*report.xml* - code coverage for SonarQube and TFS
-*result.xml* - tests results for SonarQube and TFS
-*status.txt* - file with exit status for *run_pytest.sh*
+*run_pytest.sh* - script runs pytest and generates *report.xml*, *result.xml*, *status.txt* \n
+*report.xml* - code coverage for SonarQube and TFS \n
+*result.xml* - tests results for SonarQube and TFS \n
+*status.txt* - file with exit status for *run_pytest.sh* \n
 
 Setting up environment for local run
 ------------------------------------
@@ -59,7 +59,7 @@ For more detailed configuration: https://docs.sonarqube.org/latest/analysis/anal
     
 **Run *Apache Airflow* and *PostgreSQL***
 
-Run
+Local run
 ---------
 from KSDM folder:
 
@@ -67,14 +67,14 @@ from KSDM folder:
     $ sh uploadservice/unittests/run_pytest.sh
     $ sonar-scanner -Dproject.settings=uploadservice/unittests/sonar-scanner.properties
 
-Make docker image
------------------
+Run with docker container creation
+----------------------------------
 
 from KSDM folder::
 
     $ docker buildx build --target testresults --no-cache -o . uploadservice
 
-! WE HAVE TO CHANGE DIRECTORY BEFORE RUNING SONAR-SCANNER (xml files are generated in uploadservice folder)
+! WE HAVE TO CHANGE DIRECTORY BEFORE RUNNING SONAR-SCANNER (xml files are generated in uploadservice folder)
 
     $ cd uploadservice
     $ sonar-scanner -Dproject.settings=unittests/sonar-scanner.properties
