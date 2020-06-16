@@ -18,6 +18,8 @@ Download the latest binary release from https://github.com/docker/buildx/release
 Change the permission to execute:
 
     $ chmod a+x ~/.docker/cli-plugins/docker-buildx
+    
+Run *Apache Airflow* and *PostgreSQL*
 
 Run
 ---
