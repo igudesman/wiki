@@ -1,21 +1,26 @@
-Uploadservice for KSDM project
-==============================
+Unit testing with publishing on SonarQube
+=========================================
 
 Preparations
 ------------
-Python version: 3.7
 
 Install requirements:
     $ pip3 install -r requirements.txt
 
+Install buildx:
+### Docker CE
 
-Run Postgres DB server::
+`buildx` comes bundled with Docker CE starting with 19.03, but requires experimental mode to be enabled on the Docker CLI.
+To enable it, `"experimental": "enabled"` can be added to the CLI configuration file `~/.docker/config.json`. An alternative is to set the `DOCKER_CLI_EXPERIMENTAL=enabled` environment variable.
 
-    $ docker run --rm -it -p 5432:5432 postgres:10
+### Binary release
 
-Create db and populate it with sample data::
+Download the latest binary release from https://github.com/docker/buildx/releases/latest and copy it to `~/.docker/cli-plugins` folder with name `docker-buildx`.
 
-    $ python init_db.py
+Change the permission to execute:
+```sh
+chmod a+x ~/.docker/cli-plugins/docker-buildx
+
 
 
 
