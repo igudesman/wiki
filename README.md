@@ -5,10 +5,10 @@ General information
 -------------------
 Following instructions allow you to run unit tests for uploadservice and publish results (code coverage and tests results) in SonarQube.
 
-*run_pytest.sh* - script runs pytest and generates *report.xml*, *result.xml*, *status.txt* /n
-*report.xml* - code coverage for SonarQube and TFS /n
-*result.xml* - tests results for SonarQube and TFS /n
-*status.txt* - file with exit status for *run_pytest.sh* /n
+- *run_pytest.sh* - script runs pytest and generates *report.xml*, *result.xml*, *status.txt*
+- *report.xml* - code coverage for SonarQube and TFS
+- *result.xml* - tests results for SonarQube and TFS 
+- *status.txt* - file with exit status for *run_pytest.sh*
 
 Setting up environment for local run
 ------------------------------------
