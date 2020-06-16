@@ -38,28 +38,18 @@ if [ -d $instalation_dir ];then
     mkdir -p $instalation_dir
 fi
 
-echo "########## INSTALLING SONAR SCANNER ##########"
-printf "Downloading... "
+# Downloading sonar-scanner
 wget -q https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.3.0.2102-linux.zip
-printf "Complete!\n"
 
-printf "Unpacking file... "
+# Unpacking file
 unzip -q sonar-scanner-cli-4.3.0.2102-linux.zip
 rm sonar-scanner-cli-4.3.0.2102-linux.zip
-printf "Complete!\n"
 
-echo "Installing on "$instalation_dir
+# Installing on "$instalation_dir
 mv sonar-scanner-4.3.0.2102-linux $instalation_dir
 
-echo "Adding Sonar Scanner to PATH..."
+# Adding Sonar Scanner to PATH
 export PATH=$PATH:sonar-scanner/bin
-
-#cp -f sonar-scanner.properties $instalation_dir/conf/sonar-scanner.properties
-
-echo "Installation Complete."
-echo "---------------------------------------"
-cat sonar-scanner.properties
-echo "---------------------------------------"
 ```
 For more information: https://docs.sonarqube.org/latest/analysis/scan/sonarscanner/
     
@@ -69,7 +59,7 @@ For more detailed configuration: https://docs.sonarqube.org/latest/analysis/anal
     
 **Run *Apache Airflow* and *PostgreSQL***
 
-Local Run
+Run
 ---------
 from KSDM folder:
 
@@ -77,35 +67,14 @@ from KSDM folder:
     $ sh uploadservice/unittests/run_pytest.sh
     $ sonar-scanner -Dproject.settings=uploadservice/unittests/sonar-scanner.properties
 
-Unit tests
-----------
-
-from uploadservice folder::
-
-    $ pytest unittests
-
-
 Make docker image
 -----------------
 
-from uploadservice folder::
+from KSDM folder::
 
-    $ docker build -t registry.stageogip.ru/ksdm/ksdm-uploadservice:latest .
+    $ docker buildx build --target testresults --no-cache -o . uploadservice
 
-Run integration-tests
----------------------
+! WE HAVE TO CHANGE DIRECTORY BEFORE RUNING SONAR-SCANNER (xml files are generated in uploadservice folder)
 
-from uploadservice folder::
-
-    $ docker-compose -f ../docker-compose.yml up --force-recreate
-
-    $ ./integration-tests/run_tests.sh
-
-exit 1 if failed
-
-Run application in container
-----------------------------
-
-After starting container run command
-(docker exec upload_service /bin/sh -c  /wait) && (docker exec -d upload_service /bin/sh -c  /app/run.sh)
-By using fake EntryPoint - there is availability replace all files in running container and restart service by executing /app/run.sh
+    $ cd uploadservice
+    $ sonar-scanner -Dproject.settings=unittests/sonar-scanner.properties
