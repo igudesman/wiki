@@ -1,8 +1,17 @@
 Unit testing with publishing in SonarQube
 =========================================
 
-Setting up environment
-----------------------
+General information
+-------------------
+Following instructions allow you to run unit tests for uploadservice and publish results (code coverage and tests results) in SonarQube.
+
+*run_pytest.sh* - script runs pytest and generates *report.xml*, *result.xml*, *status.txt*
+*report.xml* - code coverage for SonarQube and TFS
+*result.xml* - tests results for SonarQube and TFS
+*status.txt* - file with exit status for *run_pytest.sh*
+
+Setting up environment for local run
+------------------------------------
 
 **Install requirements:**
 
@@ -18,16 +27,55 @@ Download the latest binary release from https://github.com/docker/buildx/release
 Change the permission to execute:
 
     $ chmod a+x ~/.docker/cli-plugins/docker-buildx
+   
+Buildx documentation: https://github.com/docker/buildx
+
+**Install sonar-scanner:**
+
+```
+instalation_dir=./sonar-scanner
+if [ -d $instalation_dir ];then
+    mkdir -p $instalation_dir
+fi
+
+echo "########## INSTALLING SONAR SCANNER ##########"
+printf "Downloading... "
+wget -q https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.3.0.2102-linux.zip
+printf "Complete!\n"
+
+printf "Unpacking file... "
+unzip -q sonar-scanner-cli-4.3.0.2102-linux.zip
+rm sonar-scanner-cli-4.3.0.2102-linux.zip
+printf "Complete!\n"
+
+echo "Installing on "$instalation_dir
+mv sonar-scanner-4.3.0.2102-linux $instalation_dir
+
+echo "Adding Sonar Scanner to PATH..."
+export PATH=$PATH:sonar-scanner/bin
+
+#cp -f sonar-scanner.properties $instalation_dir/conf/sonar-scanner.properties
+
+echo "Installation Complete."
+echo "---------------------------------------"
+cat sonar-scanner.properties
+echo "---------------------------------------"
+```
+For more information: https://docs.sonarqube.org/latest/analysis/scan/sonarscanner/
+    
+**Configure sonar-scanner.properties in unittests folder:**
+
+For more detailed configuration: https://docs.sonarqube.org/latest/analysis/analysis-parameters/
     
 **Run *Apache Airflow* and *PostgreSQL***
 
-Run
----
-Run application:
-    from uploadservice folder::
+Local Run
+---------
+from KSDM folder:
 
-    $ db_host=localhost AIRFLOW_HOST=xx.xx.xx.xx AIRFLOW_PORT=8080 UPLOADSERVICE_PORT=8081 python3 -m service
-
+    $ chmod +x uploadservice/unittests/run_pytest.sh 
+    $ sh uploadservice/unittests/run_pytest.sh
+    $ sonar-scanner -Dproject.settings=uploadservice/unittests/sonar-scanner.properties
 
 Unit tests
 ----------
